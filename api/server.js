@@ -34,6 +34,11 @@ app.get('/api/items', async (req, res) => {
 
 // Ajout d'un élément
 app.post('/api/items', async (req, res) => {
+  // Validation : le nom doit être une chaîne non vide de 100 caractères max
+  const name = req.body && req.body.name;
+  if (typeof name !== 'string' || name.trim() === '' || name.length > 100) {
+    return res.sendStatus(400);
+  }
   const title = req.body?.title;
   if (!title) {
     return res.status(400).json({ error: 'Le titre est obligatoire' });
