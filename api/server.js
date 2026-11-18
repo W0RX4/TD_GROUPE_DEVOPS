@@ -18,7 +18,7 @@ db.on('error', (err) => console.error('Erreur BDD :', err.message));
 // Vérifie que l'API et la base de données répondent
 app.get('/api/health', async (req, res) => {
   await db.query('SELECT 1');
-  res.json({ status: 'ok', db: 'up', version: process.env.APP_VERSION });
+  res.json({ status: 'ok', db: 'up', version: process.env.APP_VERSION, env: process.env.APP_ENV || 'dev' });
 });
 
 // Retourne la version de l'application (tag de l'image, via APP_VERSION)
