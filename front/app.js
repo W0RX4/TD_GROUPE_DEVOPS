@@ -18,7 +18,6 @@ async function loadHealth() {
     const res = await fetch(`${API}/health`);
     const data = await res.json();
     statusEl.textContent = `API ${data.status} · BDD ${data.db} · version ${data.version}`;
-    document.getElementById('env').textContent = data.env;
   } catch {
     statusEl.textContent = 'API injoignable';
   }
