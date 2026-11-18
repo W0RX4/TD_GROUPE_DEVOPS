@@ -1,0 +1,49 @@
+# Environnement de Dev local (chaque membre du groupe a le sien).
+# Lancer :  docker compose up --build
+# Front :   http://localhost:8080
+name: td-devops
+
+services:
+  db:
+    image: postgres:16-alpine
+    environment:
+      POSTGRES_USER: ${DB_USER:-app}
+      POSTGRES_PASSWORD: ${DB_PASSWORD:-app}
+      POSTGRES_DB: ${DB_NAME:-appdb}
+    volumes:
+      - db-data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U $${POSTGRES_USER} -d $${POSTGRES_DB}"]
+      interval: 5s
+      timeout: 3s
+      retries: 10
+    # Pas de port exposé sur l'hôte : seule l'API parle à la BDD
+
+  api:
+    build: ./api
+    environment:
+      PORT: 3000
+      APP_ENV: dev
+      APP_VERSION: local
+      DB_HOST: db
+      DB_PORT: 5432
+      DB_USER: ${DB_USER:-app}
+      DB_PASSWORD: ${DB_PASSWORD:-app}
+      DB_NAME: ${DB_NAME:-appdb}
+    depends_on:
+      db:
+        condition: service_healthy
+    ports:
+      - "${API_PORT:-3000}:3000"
+
+  front:
+    build: ./front
+    environment:
+      API_UPSTREAM: api:3000
+    depends_on:
+      - api
+    ports:
+      - "${FRONT_PORT:-8080}:8080"
+
+volumes:
+  db-data:
