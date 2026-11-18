@@ -1,0 +1,33 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>TD DevOps</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header>
+    <h1>TD DevOps</h1>
+  </header>
+
+  <main>
+    <form id="item-form">
+      <input id="item-title" type="text" placeholder="Nouvel élément…" maxlength="200" required>
+      <button type="submit">Ajouter</button>
+    </form>
+
+    <p id="error" class="error" hidden></p>
+
+    <p id="count" class="count"></p>
+
+    <ul id="items"></ul>
+  </main>
+
+  <footer style="margin-top:2em;color:#666;font-size:0.9em">
+    TP DevOps | Environnement : <span id="env">inconnu</span>
+  </footer>
+
+  <script src="app.js"></script>
+</body>
+</html>
