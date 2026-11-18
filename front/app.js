@@ -5,7 +5,6 @@ const input = document.getElementById('item-title');
 const list = document.getElementById('items');
 const errorBox = document.getElementById('error');
 const statusEl = document.getElementById('status');
-const badge = document.getElementById('env-badge');
 
 function showError(msg) {
   errorBox.textContent = msg;
@@ -16,11 +15,8 @@ async function loadHealth() {
   try {
     const res = await fetch(`${API}/health`);
     const data = await res.json();
-    badge.textContent = data.env.toUpperCase();
-    badge.className = `badge badge-${data.env}`;
     statusEl.textContent = `API ${data.status} · BDD ${data.db} · version ${data.version}`;
   } catch {
-    badge.textContent = '?';
     statusEl.textContent = 'API injoignable';
   }
 }
