@@ -18,7 +18,12 @@ db.on('error', (err) => console.error('Erreur BDD :', err.message));
 // Vérifie que l'API et la base de données répondent
 app.get('/api/health', async (req, res) => {
   await db.query('SELECT 1');
-  res.json({ status: 'ok', db: 'up', version: process.env.APP_VERSION });
+  res.json({ status: 'ok', db: 'up', version: process.env.APP_VERSION, env: process.env.APP_ENV || 'dev' });
+});
+
+// Retourne la version de l'application (tag de l'image, via APP_VERSION)
+app.get('/api/version', (_, res) => {
+  res.json({ version: process.env.APP_VERSION || 'dev' });
 });
 
 // Liste des éléments
@@ -29,9 +34,10 @@ app.get('/api/items', async (req, res) => {
 
 // Ajout d'un élément
 app.post('/api/items', async (req, res) => {
+  // Validation : le titre doit être un texte non vide de 200 caractères max
   const title = req.body?.title;
-  if (!title) {
-    return res.status(400).json({ error: 'Le titre est obligatoire' });
+  if (typeof title !== 'string' || title.trim() === '' || title.length > 200) {
+    return res.status(400).json({ error: 'Titre obligatoire (200 caractères max)' });
   }
   const result = await db.query('INSERT INTO items (title) VALUES ($1) RETURNING *', [title]);
   res.status(201).json(result.rows[0]);
@@ -43,6 +49,12 @@ app.delete('/api/items/:id', async (req, res) => {
   if (result.rowCount === 0) {
     return res.status(404).json({ error: 'Élément introuvable' });
   }
+  res.status(204).end();
+});
+
+// Suppression de tous les éléments
+app.delete('/api/items', async (req, res) => {
+  await db.query('DELETE FROM items');
   res.status(204).end();
 });
 

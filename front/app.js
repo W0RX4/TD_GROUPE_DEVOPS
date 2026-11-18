@@ -6,6 +6,7 @@ const list = document.getElementById('items');
 const errorBox = document.getElementById('error');
 const statusEl = document.getElementById('status');
 const countEl = document.getElementById('count');
+const searchEl = document.getElementById('search');
 
 function showError(msg) {
   errorBox.textContent = msg;
@@ -17,6 +18,7 @@ async function loadHealth() {
     const res = await fetch(`${API}/health`);
     const data = await res.json();
     statusEl.textContent = `API ${data.status} · BDD ${data.db} · version ${data.version}`;
+    document.getElementById('env').textContent = data.env;
   } catch {
     statusEl.textContent = 'API injoignable';
   }
@@ -26,7 +28,8 @@ async function loadItems() {
   try {
     const res = await fetch(`${API}/items`);
     if (!res.ok) throw new Error();
-    const items = await res.json();
+    const search = searchEl.value.toLowerCase();
+    const items = (await res.json()).filter((item) => item.title.toLowerCase().includes(search));
     countEl.textContent = `${items.length} élément${items.length > 1 ? 's' : ''}`;
     list.innerHTML = '';
     if (items.length === 0) {
@@ -66,6 +69,13 @@ async function deleteItem(id) {
   await loadItems();
 }
 
+// Bouton "Tout supprimer"
+document.getElementById('clear-all').addEventListener('click', async () => {
+  if (!confirm('Supprimer tous les éléments ?')) return;
+  await fetch(`${API}/items`, { method: 'DELETE' });
+  await loadItems();
+});
+
 form.addEventListener('submit', async (e) => {
   e.preventDefault();
   showError('');
@@ -90,3 +100,11 @@ form.addEventListener('submit', async (e) => {
 
 loadHealth();
 loadItems();
+
+// Recherche : on filtre la liste à chaque frappe
+searchEl.addEventListener('input', loadItems);
+
+// Mode sombre
+document.getElementById('dark-mode').addEventListener('click', () => {
+  document.body.classList.toggle('dark');
+});

@@ -9,23 +9,28 @@
 <body>
   <header>
     <h1>TD DevOps</h1>
+    <button type="button" id="dark-mode">Mode sombre</button>
   </header>
 
   <main>
     <form id="item-form">
       <input id="item-title" type="text" placeholder="Nouvel élément…" maxlength="200" required>
       <button type="submit">Ajouter</button>
+      <button type="button" id="clear-all" class="clear-all">Tout supprimer</button>
     </form>
 
     <p id="error" class="error" hidden></p>
 
     <p id="count" class="count"></p>
 
+    <input id="search" type="search" placeholder="Rechercher…">
+
     <ul id="items"></ul>
   </main>
 
   <footer style="margin-top:2em;color:#666;font-size:0.9em">
     TP DevOps | Environnement : <span id="env">inconnu</span>
+    <br><small id="status"></small>
   </footer>
 
   <script src="app.js"></script>
