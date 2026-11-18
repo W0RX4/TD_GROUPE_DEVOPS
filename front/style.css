@@ -58,6 +58,8 @@ li.empty { color: #6e7781; font-style: italic; }
 
 .error { color: #cf222e; }
 
+.count { margin: 24px 0 0; color: #6e7781; font-size: 0.9rem; }
+
 footer {
   text-align: center;
   color: #6e7781;
