@@ -66,6 +66,13 @@ async function deleteItem(id) {
   await loadItems();
 }
 
+// Bouton "Tout supprimer"
+document.getElementById('clear-all').addEventListener('click', async () => {
+  if (!confirm('Supprimer tous les éléments ?')) return;
+  await fetch(`${API}/items`, { method: 'DELETE' });
+  await loadItems();
+});
+
 form.addEventListener('submit', async (e) => {
   e.preventDefault();
   showError('');

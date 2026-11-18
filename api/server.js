@@ -46,6 +46,12 @@ app.delete('/api/items/:id', async (req, res) => {
   res.status(204).end();
 });
 
+// Suppression de tous les éléments
+app.delete('/api/items', async (req, res) => {
+  await db.query('DELETE FROM items');
+  res.status(204).end();
+});
+
 // Au démarrage : on crée la table si elle n'existe pas, puis on lance le serveur
 db.query(`
   CREATE TABLE IF NOT EXISTS items (
