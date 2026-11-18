@@ -39,6 +39,12 @@ async function loadItems() {
     for (const item of items) {
       const li = document.createElement('li');
       li.textContent = item.title; // textContent : pas d'injection HTML
+
+      const date = document.createElement('small');
+      date.className = 'date';
+      date.textContent = new Date(item.created_at).toLocaleString('fr-FR');
+      li.appendChild(date);
+
       list.appendChild(li);
     }
   } catch {

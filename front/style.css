@@ -58,6 +58,9 @@ li.empty { color: #6e7781; font-style: italic; }
 
 .error { color: #cf222e; }
 
+li { display: flex; justify-content: space-between; align-items: center; }
+.date { color: #6e7781; font-size: 0.8rem; }
+
 .count { margin: 24px 0 0; color: #6e7781; font-size: 0.9rem; }
 
 footer {
