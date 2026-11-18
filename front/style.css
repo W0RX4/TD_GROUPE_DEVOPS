@@ -66,6 +66,8 @@ li { display: flex; justify-content: space-between; align-items: center; }
 
 .count { margin: 24px 0 0; color: #6e7781; font-size: 0.9rem; }
 
+#search { width: 100%; margin-top: 12px; }
+
 footer {
   text-align: center;
   color: #6e7781;
