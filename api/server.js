@@ -18,7 +18,7 @@ db.on('error', (err) => console.error('Erreur BDD :', err.message));
 // Vérifie que l'API et la base de données répondent
 app.get('/api/health', async (req, res) => {
   await db.query('SELECT 1');
-  res.json({ status: 'ok', db: 'up', version: process.env.APP_VERSION });
+  res.json({ status: 'ok', db: 'up', version: process.env.APP_VERSION, env: process.env.APP_ENV || 'dev' });
 });
 
 // Liste des éléments
@@ -35,6 +35,21 @@ app.post('/api/items', async (req, res) => {
   }
   const result = await db.query('INSERT INTO items (title) VALUES ($1) RETURNING *', [title]);
   res.status(201).json(result.rows[0]);
+});
+
+// Suppression d'un élément
+app.delete('/api/items/:id', async (req, res) => {
+  const result = await db.query('DELETE FROM items WHERE id = $1', [Number(req.params.id) || 0]);
+  if (result.rowCount === 0) {
+    return res.status(404).json({ error: 'Élément introuvable' });
+  }
+  res.status(204).end();
+});
+
+// Suppression de tous les éléments
+app.delete('/api/items', async (req, res) => {
+  await db.query('DELETE FROM items');
+  res.status(204).end();
 });
 
 // Au démarrage : on crée la table si elle n'existe pas, puis on lance le serveur
