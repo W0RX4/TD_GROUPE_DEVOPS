@@ -5,6 +5,7 @@ const input = document.getElementById('item-title');
 const list = document.getElementById('items');
 const errorBox = document.getElementById('error');
 const statusEl = document.getElementById('status');
+const countEl = document.getElementById('count');
 
 function showError(msg) {
   errorBox.textContent = msg;
@@ -26,6 +27,7 @@ async function loadItems() {
     const res = await fetch(`${API}/items`);
     if (!res.ok) throw new Error();
     const items = await res.json();
+    countEl.textContent = `${items.length} élément${items.length > 1 ? 's' : ''}`;
     list.innerHTML = '';
     if (items.length === 0) {
       const li = document.createElement('li');
