@@ -21,6 +21,11 @@ app.get('/api/health', async (req, res) => {
   res.json({ status: 'ok', db: 'up', version: process.env.APP_VERSION, env: process.env.APP_ENV || 'dev' });
 });
 
+// Retourne la version de l'application (tag de l'image, via APP_VERSION)
+app.get('/api/version', (_, res) => {
+  res.json({ version: process.env.APP_VERSION || 'dev' });
+});
+
 // Liste des éléments
 app.get('/api/items', async (req, res) => {
   const result = await db.query('SELECT * FROM items ORDER BY id DESC');
