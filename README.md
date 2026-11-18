@@ -5,7 +5,7 @@ Application 3 services déployée sur 3 environnements (Dev / Val / Prod).
 | Service | Techno | Dossier | Port conteneur |
 |---|---|---|---|
 | **front** | HTML/JS statique servi par nginx (non-root) | `front/` | 8080 |
-| **api** | Node.js 20 + Express | `api/` | 3000 |
+| **api** | Node.js 20 + Express 5 | `api/` | 3000 |
 | **db** | PostgreSQL 16 (image officielle) | — | 5432 |
 
 Le front sert les fichiers statiques et redirige `/api/*` vers l'API (`API_UPSTREAM`, `api:3000` par défaut).
@@ -37,11 +37,9 @@ Arrêter : `docker compose down` (ajouter `-v` pour supprimer aussi les données
 
 | Service | Variable | Défaut | Rôle |
 |---|---|---|---|
-| api | `PORT` | `3000` | Port d'écoute |
-| api | `APP_ENV` | `dev` | `dev` / `val` / `prod` (affiché dans le front) |
-| api | `APP_VERSION` | `local` | SHA du commit / tag de l'image (affiché dans le front) |
-| api | `DB_HOST` / `DB_PORT` | `localhost` / `5432` | Adresse de PostgreSQL |
-| api | `DB_USER` / `DB_PASSWORD` / `DB_NAME` | `app` / `app` / `appdb` | Identifiants BDD (Secret K8s en Val/Prod) |
+| api | `APP_VERSION` | — | SHA du commit / tag de l'image (affiché dans le front) |
+| api | `DB_HOST` | — | Adresse de PostgreSQL (`db`) |
+| api | `DB_USER` / `DB_PASSWORD` / `DB_NAME` | — | Identifiants BDD (Secret K8s en Val/Prod) |
 | front | `API_UPSTREAM` | `api:3000` | Service vers lequel nginx redirige `/api` |
 
 ## Images Docker
