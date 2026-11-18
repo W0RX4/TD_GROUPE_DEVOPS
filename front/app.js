@@ -18,7 +18,6 @@ async function loadHealth() {
     const res = await fetch(`${API}/health`);
     const data = await res.json();
     statusEl.textContent = `API ${data.status} · BDD ${data.db} · version ${data.version}`;
-    document.getElementById('env').textContent = data.env;
   } catch {
     statusEl.textContent = 'API injoignable';
   }
@@ -103,3 +102,8 @@ loadItems();
 
 // Recherche : on filtre la liste à chaque frappe
 searchEl.addEventListener('input', loadItems);
+
+// Mode sombre
+document.getElementById('dark-mode').addEventListener('click', () => {
+  document.body.classList.toggle('dark');
+});

@@ -23,7 +23,7 @@ spec:
                 fieldRef:
                   fieldPath: metadata.namespace
             - name: APP_VERSION
-              value: TAG
+              value: "TAG"
             - name: DB_HOST
               value: db
             - name: DB_NAME
