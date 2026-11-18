@@ -34,14 +34,10 @@ app.get('/api/items', async (req, res) => {
 
 // Ajout d'un élément
 app.post('/api/items', async (req, res) => {
-  // Validation : le nom doit être une chaîne non vide de 100 caractères max
-  const name = req.body && req.body.name;
-  if (typeof name !== 'string' || name.trim() === '' || name.length > 100) {
-    return res.sendStatus(400);
-  }
+  // Validation : le titre doit être un texte non vide de 200 caractères max
   const title = req.body?.title;
-  if (!title) {
-    return res.status(400).json({ error: 'Le titre est obligatoire' });
+  if (typeof title !== 'string' || title.trim() === '' || title.length > 200) {
+    return res.status(400).json({ error: 'Titre obligatoire (200 caractères max)' });
   }
   const result = await db.query('INSERT INTO items (title) VALUES ($1) RETURNING *', [title]);
   res.status(201).json(result.rows[0]);
