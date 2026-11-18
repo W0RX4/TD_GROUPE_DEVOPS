@@ -37,6 +37,15 @@ app.post('/api/items', async (req, res) => {
   res.status(201).json(result.rows[0]);
 });
 
+// Suppression d'un élément
+app.delete('/api/items/:id', async (req, res) => {
+  const result = await db.query('DELETE FROM items WHERE id = $1', [Number(req.params.id) || 0]);
+  if (result.rowCount === 0) {
+    return res.status(404).json({ error: 'Élément introuvable' });
+  }
+  res.status(204).end();
+});
+
 // Au démarrage : on crée la table si elle n'existe pas, puis on lance le serveur
 db.query(`
   CREATE TABLE IF NOT EXISTS items (

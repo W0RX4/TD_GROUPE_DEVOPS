@@ -59,7 +59,10 @@ li.empty { color: #6e7781; font-style: italic; }
 .error { color: #cf222e; }
 
 li { display: flex; justify-content: space-between; align-items: center; }
-.date { color: #6e7781; font-size: 0.8rem; }
+.date { color: #6e7781; font-size: 0.8rem; margin-left: auto; }
+
+.delete { margin-left: 12px; padding: 4px 10px; background: transparent; color: #cf222e; }
+.delete:hover { background: #ffebe9; }
 
 .count { margin: 24px 0 0; color: #6e7781; font-size: 0.9rem; }
 

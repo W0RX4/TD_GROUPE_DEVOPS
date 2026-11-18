@@ -45,11 +45,25 @@ async function loadItems() {
       date.textContent = new Date(item.created_at).toLocaleString('fr-FR');
       li.appendChild(date);
 
+      const del = document.createElement('button');
+      del.className = 'delete';
+      del.textContent = '✕';
+      del.title = 'Supprimer';
+      del.addEventListener('click', () => deleteItem(item.id));
+      li.appendChild(del);
+
       list.appendChild(li);
     }
   } catch {
     showError('Impossible de charger les éléments.');
   }
+}
+
+async function deleteItem(id) {
+  showError('');
+  const res = await fetch(`${API}/items/${id}`, { method: 'DELETE' });
+  if (!res.ok) showError('Impossible de supprimer cet élément.');
+  await loadItems();
 }
 
 form.addEventListener('submit', async (e) => {
