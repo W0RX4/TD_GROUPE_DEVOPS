@@ -76,3 +76,6 @@ footer {
   color: #6e7781;
   padding: 16px;
 }
+
+body.dark { background: #1f2328; color: #f4f5f7; }
+body.dark li { background: #2d333b; }

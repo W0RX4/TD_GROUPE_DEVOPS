@@ -102,3 +102,8 @@ loadItems();
 
 // Recherche : on filtre la liste à chaque frappe
 searchEl.addEventListener('input', loadItems);
+
+// Mode sombre
+document.getElementById('dark-mode').addEventListener('click', () => {
+  document.body.classList.toggle('dark');
+});
