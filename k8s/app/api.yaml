@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
         - name: api
-          image: DOCKERHUB_USER/td-api:TAG
+          image: pgosseli/td-api:TAG
           ports:
             - containerPort: 3000
           env:

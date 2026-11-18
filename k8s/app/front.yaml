@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
         - name: front
-          image: DOCKERHUB_USER/td-front:TAG
+          image: pgosseli/td-front:TAG
           ports:
             - containerPort: 8080
 ---
